@@ -20,7 +20,7 @@ class PostController extends Controller
     protected function create_slug($value , $id){
         $slug = Str::slug($value);
         $count = 1;
-        while(Post::where('slug' , $slug)->where('id' , '!=' , $id)->first()){
+        while(Post::whereSlug($slug)->where('id' , '!=' , $id)->first()){
             $slug = Str::slug($value)."-".$count;
             $count++;
         }
