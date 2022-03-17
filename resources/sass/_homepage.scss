@@ -1,0 +1,16 @@
+.button-choice button{
+    border: unset;
+    background-color: unset;
+    color: #ce8b77;
+    display: inline-block;
+
+    &:hover{
+        color: #ff3c00;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+}
+
+.confirm-delete{
+    display: inline-block;
+}
