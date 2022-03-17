@@ -1,7 +1,7 @@
 @extends('layouts.dashboards')
 
 @section('content')
-    <h1>inserisci fumetto</h1>
+    <h1>Crea un nuovo post!</h1>
     <form action="{{route("admin.posts.store")}}" method="POST">
     @csrf
     <div class="form-group">
@@ -35,6 +35,26 @@
             {{$message}}
         </div>
         @enderror
+    </div>
+
+    <div class="form-group">
+        <label for="category_id">Categoria</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="category_id">Categoria</label>
+            </div>
+            <select class="custom-select" id="category_id" name="category_id">
+              <option value="{{null}}">scegli..</option>
+              @foreach ($categories as $category)
+                <option value="{{$category->id}}" {{(old("category_id") == $category->id) ? "selected" : ""}}>{{$category->name}}</option>
+              @endforeach
+            </select>
+          </div>
+          @error('category_id')
+              <div class="alert alert-danger">
+                  {{$message}}
+              </div>
+          @enderror
     </div>
 
     <button type="submit" class="btn btn-primary">CREA</button>

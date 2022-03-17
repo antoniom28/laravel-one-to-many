@@ -14,6 +14,7 @@ class PostController extends Controller
         "title" => "string|min:10",
         "content" => "required",
         "published" => "required",
+        "category_id" => "required",
     ];
 
     protected function create_slug($value , $id){
@@ -44,7 +45,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create' , compact('categories'));
     }
 
     /**
@@ -55,6 +57,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate($this->validation);
 
         $data = $request->all();
@@ -67,6 +70,7 @@ class PostController extends Controller
 
         $new_post->slug = $this->create_slug($data["title"], null);
         
+        $new_post->category_id = $data['category_id'];
         $new_post->save();
 
         return redirect()->route('admin.posts.index');
@@ -106,7 +110,6 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        
         $request->validate($this->validation);
 
         $data = $request->all();

@@ -1,7 +1,7 @@
 @extends('layouts.dashboards')
 
 @section('content')
-    <h1>inserisci fumetto</h1>
+    <h1>Modifica il tuo post!</h1>
     <form action="{{route("admin.posts.update" , $post->id)}}" method="POST">
         @csrf
         @method('PUT')
@@ -38,18 +38,16 @@
         @enderror
     </div>
 
-    
-
     <div class="form-group">
-        <label for="category_id">Tipologia</label>
+        <label for="category_id">Categoria</label>
         <div class="input-group">
             <div class="input-group-prepend">
-              <label class="input-group-text" for="category_id">Tipologia</label>
+              <label class="input-group-text" for="category_id">Categoria</label>
             </div>
             <select class="custom-select" id="category_id" name="category_id">
-              <option>scegli..</option>
+              <option value="{{null}}">scegli..</option>
               @foreach ($categories as $category)
-                <option value="{{$category->id}}" {{(old("category_id") == $category->id) ? "selected" : ""}}>{{$category->name}}</option>
+                <option value="{{$category->id}}" {{((old("category_id")??$post->category_id) == $category->id) ? "selected" : ""}}>{{$category->name}}</option>
               @endforeach
             </select>
           </div>
