@@ -13,11 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="d-flex justify-content-center m-5 avatar">
+                    <div class="d-flex justify-content-center avatar">
                         @if(Auth::user()->avatar)
-                            <img src="{{ Auth::user()->avatar }}" alt="">
+                            <img src="{{ asset("storage/".Auth::user()->avatar) }}" alt="">
                         @else
-                            <h1 class="text-center">Carica un'avatar ! (è solo testo..)</h1>
+                            <h1 class="text-center m-5">Carica un'avatar ! (è solo testo..)</h1>
                         @endif
                     </div>
                     <div class="text-center">

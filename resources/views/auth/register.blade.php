@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -61,19 +61,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('avatar') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="avatar" type="text" class="form-control @error('avatar') is-invalid @enderror" name="avatar" value="{{ old('avatar') }}" autocomplete="avatar" autofocus>
-
-                                @error('avatar')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <div class="form-group">
+                            <label for="avatar">Image</label>
+                            <input type="file" name="avatar" class="p-1 form-control @error('avatar') is-invalid @enderror ">
                         </div>
+                        @error('avatar')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
                         
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
