@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Crea un nuovo post!</h1>
-    <form action="{{route("admin.posts.store")}}" method="POST">
+    <form action="{{route("admin.posts.store")}}" enctype="multipart/form-data" method="POST">
     @csrf
     <div class="form-group">
         <label for="title">Titolo</label>
@@ -25,6 +25,16 @@
             </div>
         @enderror
     </div>
+
+    <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" name="image" class="p-1 form-control @error('image') is-invalid @enderror ">
+    </div>
+    @error('image')
+    <div class="invalid-feedback">
+        {{$message}}
+    </div>
+    @enderror
 
     <div class="form-group">
         <label for="published">Pubblicare alla creazione ? </label>

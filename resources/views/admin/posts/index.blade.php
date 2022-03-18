@@ -70,45 +70,61 @@
     ?>
 
         @if($published)
-            <div class="my-4 card">
-                <h1> {{$post->title}} </h1>
-            <p> {{$post->content}} </p>
-            <p> <strong>Slug</strong>: {{$post->slug}} </p>
-            @if($post->category != null)
-                <p> Category : {{$post->category->name}} </p> 
-            @else
-                <p> Category : --- </p>
-            @endif
-            <span> Creato il : {{$post->created_at}} </span>
-            
-            
-            @if(!$post->published)
-                <h1>questo non è pubblico</h1>
-            @endif
-            <br><br>
+            <div class="flex-row my-4 card">
+                <div class="image-card">
+                @if($post->image)
+                    <img style="" src="{{asset('storage/'.$post->image)}}" alt="">
+                @else
+                    <div class="text-center h-100 d-flex align-items-center justify-content-center">
+                        <h2 class="w-75 text-white"> {{$post->title}} </h2>
+                    </div>
+                @endif
+                </div>
+                <div style="{{!$post->image ? 'margin:0 auto;' : ''}}" class="text-card">
+                    <div class="title">
+                        <h1> {{$post->title}} </h1>
+                    </div>
+                <div class="all-content">
+                    <p> {{$post->content}} </p>
+               
+                <p> <strong>Slug</strong>: {{$post->slug}} </p>
+                @if($post->category != null)
+                    <p> Category : {{$post->category->name}} </p> 
+                @else
+                    <p> Category : --- </p>
+                @endif
+                <span> Creato il : {{$post->created_at}} </span>
+                
+                
+                @if(!$post->published)
+                    <h1>questo non è pubblico</h1>
+                @endif
+                <br><br>
 
-            <div>
-                <a href="{{route('admin.posts.show' , $post->id)}}">
-                    VISUALIZZA
-                </a>
-            </div>
-            <div>
-                <a href="{{route('admin.posts.edit' , $post->id)}}">
-                    MODIFICA
-                </a>
-            </div>
-
-    
-            <form class="confirm-delete" method="POST" action="{{route('admin.posts.destroy' , $post->id)}}">
-                @csrf
-                @method("DELETE")
-
-                <div class="button-choice">
-                    <a href="">
-                        <button class="p-0 yes-btn" type="submit" value="cancella">CANCELLA</button>
+                <div>
+                    <a href="{{route('admin.posts.show' , $post->id)}}">
+                        VISUALIZZA
                     </a>
                 </div>
-            </form> 
+                <div>
+                    <a href="{{route('admin.posts.edit' , $post->id)}}">
+                        MODIFICA
+                    </a>
+                </div>
+
+        
+                <form class="confirm-delete" method="POST" action="{{route('admin.posts.destroy' , $post->id)}}">
+                    @csrf
+                    @method("DELETE")
+
+                    <div class="button-choice">
+                        <a href="">
+                            <button class="p-0 yes-btn" type="submit" value="cancella">CANCELLA</button>
+                        </a>
+                    </div>
+                </form> 
+                </div>
+                </div>
             </div>
         @endif
     @endforeach

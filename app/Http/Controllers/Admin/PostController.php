@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Post;
 
 class PostController extends Controller
@@ -58,7 +59,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate($this->validation);
 
         $data = $request->all();
@@ -66,6 +66,10 @@ class PostController extends Controller
         $new_post = new Post();
         $new_post->title = $data["title"];
         $new_post->content = $data["content"];
+        if(isset($data['image'])){
+            $path = Storage::put('uploads' , $data['image']);
+            $new_post->image = $path;
+        }
         if($data["published"] == 'yes')
             $new_post->published = true;
 

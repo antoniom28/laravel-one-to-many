@@ -34,6 +34,35 @@
   align-items: center;
 }
 
+.card {
+  height: 400px;
+}
+
+.image-card {
+  width: 45%;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-card img {
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text-card {
+  padding: 10px;
+  width: 55%;
+  overflow: auto;
+}
+
+.text-card .all-content {
+  padding-left: 20px;
+}
+
 /*!
  * Bootstrap v4.6.1 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
