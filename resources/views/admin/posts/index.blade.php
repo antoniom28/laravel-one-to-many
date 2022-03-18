@@ -2,6 +2,7 @@
 
 @section('content')
     <?php
+        use App\User;
         if(isset($_GET['user']))
             $menu = false;
         else
@@ -69,7 +70,6 @@
 
     @foreach ($filter_category != null ? $categories[$filter_category]->posts : $published as $post)
 
-
             <div class="flex-row my-4 card">
                 <div class="image-card">
                 @if($post->image)
@@ -94,7 +94,11 @@
                     <p> Category : --- </p>
                 @endif
                 <span> Creato il : {{$post->created_at}}</span>
-                
+                <?php
+                    $user_post_name = User::all()->where('id',$post->user_id)->first();
+                ?>
+                <br>
+                <span> da : {{$user_post_name->name == Auth::user()->name ? "Te" : $user_post_name->name}}</span>
                 
                 
                 @if(!$post->published)
