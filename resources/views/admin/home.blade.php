@@ -13,35 +13,37 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="d-flex justify-content-center avatar">
+                    <div class="d-flex flex-column align-items-center justify-content-center avatar">
                         @if(Auth::user()->avatar)
                             <img src="{{ asset("storage/".Auth::user()->avatar) }}" alt="">
                         @else
-                                <form action="{{route("admin.users.update" , Auth::user())}}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    @method('PUT')
-                                <div class="form-group">
-                                    <label for="avatar">Image</label>
-                                    <input type="file" name="avatar" class="p-1 form-control @error('avatar') is-invalid @enderror ">
-                                </div>
-                                @error('avatar')
-                                <div class="invalid-feedback">
-                                    {{$message}}
-                                </div>
-                                @enderror
-
-                                <button type="submit" class="btn btn-primary">
-                                    Vai
-                                </button>
-                            </form>
+                            <h1>CARICA UN AVATAR</h1>    
                         @endif
                     </div>
-                    <div class="text-center">
+                    <div class="mt-4 text-center">
                         <u>{{ Auth::user()->name }}</u>
                         {{ __('You are logged in!') }}
                     </div>
                 </div>
+                
             </div>
+            <form action="{{route("admin.users.update" , Auth::user())}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+            <div class="d-flex form-group">
+                <input type="file" name="avatar" class="w-70 p-1 form-control @error('avatar') is-invalid @enderror ">
+                <button type="submit" class="w-30 btn btn-primary">
+                    Cambia Avatar
+                </button>
+            </div>
+            @error('avatar')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
+
+            
+        </form>
         </div>
     </div>
 </div>

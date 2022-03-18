@@ -1,4 +1,12 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);a {
+@import url(https://fonts.googleapis.com/css?family=Nunito);.w-70 {
+  width: 70% !important;
+}
+
+.w-30 {
+  width: 30% !important;
+}
+
+a {
   margin-right: 10px;
   display: inline-block;
 }

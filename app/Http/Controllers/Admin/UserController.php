@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    protected $validation = [
+        "avatar" => "required",
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -71,6 +74,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $request->validate($this->validation);
+
         $data = $request->all();
         $user->avatar = NULL;
         if(isset($data['avatar'])){
