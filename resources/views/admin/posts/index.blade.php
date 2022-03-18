@@ -94,7 +94,7 @@
                     <p> Category : --- </p>
                 @endif
                 <span> Creato il : {{$post->created_at}}</span>
-                <span> da : {{$users[$post->user_id - 1]->name == Auth::user()->name ? 'Te' : $users[$post->user_id - 1]->name}}</span>
+                
                 
                 
                 @if(!$post->published)
