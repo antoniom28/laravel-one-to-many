@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -37,7 +39,8 @@ class PostController extends Controller
     {
         $posts = Post::all();
         $categories = Category::all();
-        return view('admin.posts.index' , compact('posts' , 'categories'));
+        $users = User::all();
+        return view('admin.posts.index' , compact('posts' , 'categories', 'users'));
     }
 
     /**
@@ -76,6 +79,7 @@ class PostController extends Controller
         $new_post->slug = $this->create_slug($data["title"], null);
         
         $new_post->category_id = $data['category_id'];
+        $new_post->user_id = Auth::user()->id;
         $new_post->save();
 
         return redirect()->route('admin.posts.index');

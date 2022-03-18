@@ -2,22 +2,23 @@
 
 @section('content')
     <?php
-        if(isset($_GET['bozze']))
+        if(isset($_GET['user']))
             $menu = false;
         else
             $menu = true;
-            if(isset($_GET['category_id'])){
-                $filter_category = $_GET['category_id'];
-                if(is_numeric($filter_category ))
-                    if($filter_category >=0 && $filter_category < count($categories))
-                        true;
-                    else
-                        $filter_category = null;
-                    else
-                        $filter_category = null;
-            }
-            else
-                $filter_category = null;
+
+        if(isset($_GET['category_id'])){
+            $filter_category = $_GET['category_id'];
+            if(is_numeric($filter_category ))
+                if($filter_category >=0 && $filter_category < count($categories))
+                    true;
+                else
+                    $filter_category = null;
+                else
+                    $filter_category = null;
+        }
+        else
+            $filter_category = null;
     ?>
 
     <div class="text-center d-flex flex-column">
@@ -26,8 +27,8 @@
                 <a class="d-inline-block" href="/">Torna in home</a>
             </h1>
             <h1>
-                <a class="d-inline-block" href="{{route("admin.posts.index" , ["bozze" => true])}}">
-                    Vai alle bozze 
+                <a class="d-inline-block" href="{{route("admin.posts.index" , ["user" => true])}}">
+                    I tuoi Post
                 </a>
             </h1>
     </div>
@@ -53,23 +54,22 @@
             </div>
         @else
             <h1>
-                <a class="d-inline-block" href="{{route("admin.posts.index")}}">Torna ai post pubblicati</a>
+                <a class="d-inline-block" href="{{route("admin.posts.index")}}">Torna ai post</a>
             </h1>
         @endif
         
     
     
+        <?php
+        if(isset($_GET['user']))
+            $published = Auth::user()->posts;
+        else
+            $published = $posts;
+        ?>
 
-    @foreach ($filter_category != null ? $categories[$filter_category]->posts : $posts as $post)
+    @foreach ($filter_category != null ? $categories[$filter_category]->posts : $published as $post)
 
-    <?php
-    if(isset($_GET['bozze']))
-        $published = !$post->published;
-    else
-        $published = $post->published;
-    ?>
 
-        @if($published)
             <div class="flex-row my-4 card">
                 <div class="image-card">
                 @if($post->image)
@@ -93,7 +93,8 @@
                 @else
                     <p> Category : --- </p>
                 @endif
-                <span> Creato il : {{$post->created_at}} </span>
+                <span> Creato il : {{$post->created_at}}</span>
+                <span> da : {{$users[$post->user_id - 1]->name == Auth::user()->name ? 'Te' : $users[$post->user_id - 1]->name}}</span>
                 
                 
                 @if(!$post->published)
@@ -106,26 +107,28 @@
                         VISUALIZZA
                     </a>
                 </div>
-                <div>
-                    <a href="{{route('admin.posts.edit' , $post->id)}}">
-                        MODIFICA
-                    </a>
-                </div>
 
-        
-                <form class="confirm-delete" method="POST" action="{{route('admin.posts.destroy' , $post->id)}}">
-                    @csrf
-                    @method("DELETE")
-
-                    <div class="button-choice">
-                        <a href="">
-                            <button class="p-0 yes-btn" type="submit" value="cancella">CANCELLA</button>
+                @if(!$menu)
+                    <div>
+                        <a href="{{route('admin.posts.edit' , $post->id)}}">
+                            MODIFICA
                         </a>
                     </div>
-                </form> 
+
+            
+                    <form class="confirm-delete" method="POST" action="{{route('admin.posts.destroy' , $post->id)}}">
+                        @csrf
+                        @method("DELETE")
+
+                        <div class="button-choice">
+                            <a href="">
+                                <button class="p-0 yes-btn" type="submit" value="cancella">CANCELLA</button>
+                            </a>
+                        </div>
+                    </form> 
+                @endif
                 </div>
                 </div>
             </div>
-        @endif
     @endforeach
 @endsection
