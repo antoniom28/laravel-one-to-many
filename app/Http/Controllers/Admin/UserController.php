@@ -60,9 +60,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('admin.users.edit' , compact('user'));
     }
 
     /**
@@ -74,14 +74,19 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $request->validate($this->validation);
-
         $data = $request->all();
-        $user->avatar = NULL;
+
+        if($user->avatar == null)
+            $request->validate($this->validation);
+
         if(isset($data['avatar'])){
             $path = Storage::put('uploads' , $data['avatar']);
             $user->avatar = $path;
-        }
+        }else
+            $user->avatar = $user->avatar;
+        
+        $user->name = $data['name'];
+
         $user->save();
         return redirect()->route('admin.home');
     }
