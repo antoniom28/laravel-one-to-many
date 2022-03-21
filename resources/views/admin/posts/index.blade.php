@@ -98,8 +98,11 @@
                     $user_post_name = User::all()->where('id',$post->user_id)->first();
                 ?>
                 <br>
-                <span> da : {{$user_post_name->name == Auth::user()->name ? "Te" : $user_post_name->name}}</span>
-                
+                @if($user_post_name)
+                    <span> da : {{$user_post_name->name == Auth::user()->name ? "Te" : $user_post_name->name}}</span>
+                @else
+                    <span> da : utente cancellato</span>
+                @endif
                 
                 @if(!$post->published)
                     <h1>questo non è pubblico</h1>
